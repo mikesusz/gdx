@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>My Web Page</title>
+      <link rel="stylesheet" href="styles.css" />
+
+      <script>
+      function toggleAnimating() {
+        var actor = document.getElementById('actor');
+        var cube = document.getElementById('cube');
+        actor.classList.add('jumping');
+        if(cube.classList.contains('flipped')) {
+          cube.classList.replace('flipped', 'flippingback');
+        } else {
+          cube.classList.add('flipped');
+        }
+
+      }
+
+      </script>
+
+  </head>
+  <body>
+    <button id="jump-button" onclick="toggleAnimating();">jump</button>
+    <div id="stage">
+
+      <div id="slide">
+        <div id="actor">
+          <div id="cube">
+            <div id="des1"></div>
+            <div id="des2"></div>
+            <div id="des3"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  <script>
+    const theActor = document.getElementById("actor");
+    theActor.addEventListener('animationend', () => {
+      theActor.classList.remove('jumping');
+      var cube = document.getElementById('cube');
+      if(cube.classList.contains('flippingback')) {
+        cube.classList.remove('flippingback');
+      }
+    });
+  </script>
+
+  </body>
+</html>
