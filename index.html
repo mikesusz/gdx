@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <title>My Web Page</title>
+      <title>GDX</title>
       <link rel="stylesheet" href="styles.css" />
 
       <script>
@@ -41,9 +41,7 @@
     theActor.addEventListener('animationend', () => {
       theActor.classList.remove('jumping');
       var cube = document.getElementById('cube');
-      if(cube.classList.contains('flippingback')) {
-        cube.classList.remove('flippingback');
-      }
+      cube.classList.remove('flippingback');
     });
   </script>
 
