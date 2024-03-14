@@ -23,6 +23,10 @@ body {
   right: 2rem;
 }
 
+#jump-button:active {
+  background: yellow;
+}
+
 #slide {
   bottom: 0;
   position: absolute;
