@@ -1,29 +1,34 @@
+/* we establish some variables for colors re-used. and using
+    a variable for animation duration means the jumping and flipping
+    will end at the same time! */
 :root {
-  --defaultbg: rgb(0, 255, 1);
+  --defaultbg: rgb(250, 236, 79);
   --defaultfg: rgb(1,255,255);
   --defaultgradient: radial-gradient(rgb(250, 236, 79), rgb(242, 176, 61));
+  --animation-duration: 0.6s;
 }
+
 
 body {
   background: #000;
   color: #aaa;
-  overflow-x: hidden;
-  /* position: relative; */
-  /* height: 100vh;
-  width: 100vw;
-  overflow-y: hidden; */
   margin: 0;
   padding: 0;
 }
 
-
+/* #stage contains all the animation.
+    the overflow-x property keeps the scrollbar from
+    appearing when the cube is off screen to the right */
 #stage {
-  height: 30vh;
-  border-bottom: 1px solid #fff;
   background: #333;
+  border-bottom: 1px solid #fff;
+  height: 30vh;
+  overflow-x: hidden;
   position: relative;
 }
 
+/* #slide is the outside div that provides the left->right
+    movement for everything */
 #slide {
   bottom: 0;
   position: absolute;
@@ -39,55 +44,12 @@ body {
   }
 }
 
-#cube {
-  width: 3rem;
-  height: 3rem;
-  border: 2px solid black;
-  background: var(--defaultgradient);
-}
-
-#des1, #des2, #des3 {
-  background: var(--defaultfg);
-  border: 2px solid black;
-  height: .5rem;
-}
-
-#des1, #des2 {
-  position: absolute;
-  width: .5rem;
-
-  top: .45rem;
-}
-#des1 {
-
-  left: .65rem;
-}
-
-#des2 {
-
-  right: .65rem;
-}
-
-#des3 {
-  position: absolute;
-  bottom: 1rem;
-  left: .5rem;
-  right: .5rem;
-}
-
-.flipped {
-  transform: rotate(180deg);
-  transition: all .6s ease-in-out;
-}
-
-.flippingback {
-  transform: rotate(360deg);
-  transition: all .6s ease-in-out;
-}
-
+/* the #actor div is absent here because it does not contain
+    any visual styles. but it receives this .jumping class
+    via javascript. .jumping only affects the up/down movement */
 .jumping {
   animation-name: jumpAnimation;
-  animation-duration: 0.6s;
+  animation-duration: var(--animation-duration);
   animation-iteration-count: 1;
   animation-timing-function: ease-in-out;
 }
@@ -105,3 +67,65 @@ body {
 
   }
 }
+
+/* the #cube is the cube. it needs position: relative so that
+    the divs inside with position: absolute will reference this.
+    everything is sized in rems so that the cube will scale
+    if you increase/decrease font size. */
+#cube {
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid black;
+  background: var(--defaultgradient);
+  position: relative;
+}
+
+/* des1, des2, and des3 are the divs inside the cube
+    that make up the 'eyes' and 'mouth' and wherever
+    possible i combined properties */
+#des1, #des2, #des3 {
+  background: var(--defaultfg);
+  border: 2px solid black;
+  height: .5rem;
+}
+
+#des1, #des2 {
+  position: absolute;
+  top: .45rem;
+  width: .5rem;
+}
+#des1 {
+  left: .55rem;
+}
+
+#des2 {
+  right: .55rem;
+}
+
+#des3 {
+  bottom: .9rem;
+  left: .5rem;
+  position: absolute;
+  right: .5rem;
+}
+
+/* flipped will rotate the cube 1/2 turn */
+.flipped {
+  transform: rotate(180deg);
+  transition: all var(--animation-duration) ease-in-out;
+}
+
+/* i needed to add the flippingback class to complete
+    the turn in the clockwise direction. if i simply removed
+    the flipped class and #cube went back to rotate(0deg) it
+    would go counter-clockwise which would be weird. */
+.flippingback {
+  transform: rotate(360deg);
+  transition: all var(--animation-duration) ease-in-out;
+}
+
+/* thanks for reading through my code. this was a fun little toy
+    to make. and since you're here i will let you in on a secret:
+    i used copilot to write all that event listener stuff!
+    i only have so much room in my brain, and i want to reserve
+    it for more important things. :) - mike */
