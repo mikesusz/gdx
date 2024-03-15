@@ -46,7 +46,7 @@ body {
 
 @keyframes slideRight {
   0% {
-    left: -30vh;
+    left: calc(var(--cube-size)*-1);
   }
 
   100% {
