@@ -5,7 +5,14 @@
       <link rel="stylesheet" href="styles.css" />
 
       <script>
-      function toggleAnimating() {
+        // the jump function is wrapped in a conditional,
+        // so if we are already jumping, it does nothing.
+        // otherwise, jump function then does 3 things:
+        // 1. adds the class 'jumping' to #actor div
+        // 2. if #cube has class 'flipped' it changes that to flippingback
+        // 3. else, it just adds 'flipped'
+        // see styles.css for what these classes do
+      function jump() {
         var actor = document.getElementById('actor');
         var cube = document.getElementById('cube');
         if(!actor.classList.contains('jumping')) {
@@ -17,34 +24,57 @@
           }
         }
       }
+      // this event listener fires on page load and attaches
+      // five other event listeners: if you click or tap it executes
+      // 'jump' function. if you click or tap and hold, it will continually
+      // execute 'jump' function until you let go.
+      // and finally, when the css animation on the #actor div is done,
+      // it removes the 'jumping' and 'flippingback' classes
+      document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('mousedown', function() {
+          jump();
+          intervalId = setInterval(jump, 100);
+        });
+        document.addEventListener('mouseup', function() {
+          clearInterval(intervalId);
+        });
+        document.addEventListener('touchstart', function() {
+          jump();
+          intervalId = setInterval(jump, 100);
+        });
+        document.addEventListener('touchend', function() {
+          clearInterval(intervalId);
+        });
+
+        const theActor = document.getElementById("actor");
+        theActor.addEventListener('animationend', () => {
+          theActor.classList.remove('jumping');
+          var cube = document.getElementById('cube');
+          cube.classList.remove('flippingback');
+        });
+      });
+
 
       </script>
 
   </head>
   <body>
-    <button id="jump-button" onclick="toggleAnimating();">JUMP</button>
     <div id="stage">
 
       <div id="slide">
+
         <div id="actor">
+
           <div id="cube">
             <div id="des1"></div>
             <div id="des2"></div>
             <div id="des3"></div>
           </div>
+
         </div>
+
       </div>
 
     </div>
-
-  <script>
-    const theActor = document.getElementById("actor");
-    theActor.addEventListener('animationend', () => {
-      theActor.classList.remove('jumping');
-      var cube = document.getElementById('cube');
-      cube.classList.remove('flippingback');
-    });
-  </script>
-
   </body>
 </html>
