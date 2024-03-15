@@ -5,7 +5,7 @@
       <link rel="stylesheet" href="styles.css" />
 
       <script>
-      function toggleAnimating() {
+      function jump() {
         var actor = document.getElementById('actor');
         var cube = document.getElementById('cube');
         if(!actor.classList.contains('jumping')) {
@@ -17,12 +17,32 @@
           }
         }
       }
-
+      window.addEventListener('DOMContentLoaded', function() {
+        var isMouseDown = false;
+        document.addEventListener('mousedown', function() {
+          isMouseDown = true;
+          jump();
+        });
+        document.addEventListener('mouseup', function() {
+          isMouseDown = false;
+        });
+        document.addEventListener('touchstart', function() {
+          isMouseDown = true;
+          jump();
+        });
+        document.addEventListener('touchend', function() {
+          isMouseDown = false;
+        });
+        document.addEventListener('mousemove', function() {
+          if (isMouseDown) {
+            jump();
+          }
+        });
+      });
       </script>
 
   </head>
   <body>
-    <button id="jump-button" onclick="toggleAnimating();">JUMP</button>
     <div id="stage">
 
       <div id="slide">
@@ -43,6 +63,8 @@
       theActor.classList.remove('jumping');
       var cube = document.getElementById('cube');
       cube.classList.remove('flippingback');
+
+
     });
   </script>
 

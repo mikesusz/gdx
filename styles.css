@@ -1,3 +1,9 @@
+:root {
+  --defaultbg: rgb(0, 255, 1);
+  --defaultfg: rgb(1,255,255);
+  --defaultgradient: radial-gradient(rgb(250, 236, 79), rgb(242, 176, 61));
+}
+
 body {
   background: #000;
   color: #aaa;
@@ -10,21 +16,12 @@ body {
   padding: 0;
 }
 
+
 #stage {
   height: 30vh;
   border-bottom: 1px solid #fff;
   background: #333;
   position: relative;
-}
-
-#jump-button {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-}
-
-#jump-button:active {
-  background: yellow;
 }
 
 #slide {
@@ -46,11 +43,11 @@ body {
   width: 3rem;
   height: 3rem;
   border: 2px solid black;
-  background: yellow;
+  background: var(--defaultgradient);
 }
 
 #des1, #des2, #des3 {
-  background: skyblue;
+  background: var(--defaultfg);
   border: 2px solid black;
   height: .5rem;
 }
