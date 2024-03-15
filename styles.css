@@ -1,11 +1,15 @@
-/* we establish some variables for colors re-used. and using
-    a variable for animation duration means the jumping and flipping
-    will end at the same time! */
+/* we establish some variables.
+    - variable for animation duration means the jumping and flipping
+    will end at the same time!
+    - cube size will scale the cube and everything inside it
+    - re-used color values */
 :root {
-  --defaultbg: rgb(250, 236, 79);
-  --defaultfg: rgb(1,255,255);
-  --defaultgradient: radial-gradient(rgb(250, 236, 79), rgb(242, 176, 61));
   --animation-duration: 0.6s;
+  --cube-size: 5rem;
+  --defaultbg: rgb(250, 236, 79);
+  --defaultgradient: radial-gradient(rgb(250, 236, 79), rgb(242, 176, 61));
+  --defaultfg: rgb(1, 255, 255);
+
 }
 
 
@@ -14,19 +18,19 @@ body {
   color: #aaa;
   margin: 0;
   padding: 0;
-  -webkit-user-select: none;  /* Chrome, Safari, Opera */
-  -moz-user-select: none;     /* Firefox */
-  -ms-user-select: none;      /* IE 10+ */
-  user-select: none;          /* Standard syntax */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* #stage contains all the animation.
     the overflow-x property keeps the scrollbar from
     appearing when the cube is off screen to the right */
 #stage {
-  background: #333;
+  background: linear-gradient(170deg, #444, #222);
   border-bottom: 1px solid #fff;
-  height: 30vh;
+  height: calc(var(--cube-size)*3.5);
   overflow-x: hidden;
   position: relative;
 }
@@ -34,15 +38,17 @@ body {
 /* #slide is the outside div that provides the left->right
     movement for everything */
 #slide {
+  animation: slideRight 3s infinite;
+  animation-timing-function: linear;
   bottom: 0;
   position: absolute;
-    animation: slideRight 2.8s infinite;
-    animation-timing-function: linear;
 }
+
 @keyframes slideRight {
   0% {
     left: -30vh;
   }
+
   100% {
     left: calc(100vw);
   }
@@ -52,65 +58,67 @@ body {
     any visual styles. but it receives this .jumping class
     via javascript. .jumping only affects the up/down movement */
 .jumping {
-  animation-name: jumpAnimation;
   animation-duration: var(--animation-duration);
   animation-iteration-count: 1;
+  animation-name: jumpAnimation;
   animation-timing-function: ease-in-out;
 }
+
 @keyframes jumpAnimation {
   0% {
     transform: translateY(0);
-
   }
+
   50% {
-    transform: translateY(-6rem);
-
+    transform: translateY(calc(var(--cube-size)*-2));
   }
+
   100% {
     transform: translateY(0);
-
   }
 }
 
 /* the #cube is the cube. it needs position: relative so that
-    the divs inside with position: absolute will reference this.
-    everything is sized in rems so that the cube will scale
-    if you increase/decrease font size. */
+    the divs inside with position: absolute will reference this. */
 #cube {
-  width: 3rem;
-  height: 3rem;
   border: 2px solid black;
   background: var(--defaultgradient);
+  height: var(--cube-size);
   position: relative;
+  width: var(--cube-size);
 }
 
 /* des1, des2, and des3 are the divs inside the cube
     that make up the 'eyes' and 'mouth' and wherever
     possible i combined properties */
-#des1, #des2, #des3 {
+#des1,
+#des2,
+#des3 {
   background: var(--defaultfg);
   border: 2px solid black;
-  height: .5rem;
+  height: calc(var(--cube-size) / 6);
 }
 
-#des1, #des2 {
+#des1,
+#des2 {
   position: absolute;
-  top: .45rem;
-  width: .5rem;
+  top: calc(var(--cube-size) / 6);
+  width: calc(var(--cube-size) / 6);
 }
+
 #des1 {
-  left: .55rem;
+  left: calc(var(--cube-size) / 6);
 }
 
 #des2 {
-  right: .55rem;
+  right: calc(var(--cube-size) / 6);
 }
 
 #des3 {
-  bottom: .9rem;
-  left: .5rem;
+  bottom: calc(var(--cube-size) / 4);
+  left: calc(var(--cube-size) / 6.5);
   position: absolute;
-  right: .5rem;
+  right: calc(var(--cube-size) / 6.5);
 }
 
 /* flipped will rotate the cube 1/2 turn */
@@ -130,6 +138,5 @@ body {
 
 /* thanks for reading through my code. this was a fun little toy
     to make. and since you're here i will let you in on a secret:
-    i used copilot to write all that event listener stuff!
-    i only have so much room in my brain, and i want to reserve
-    it for more important things. :) - mike */
+    i used copilot to write all that event listener stuff! :)
+     - mike */
